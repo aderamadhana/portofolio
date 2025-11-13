@@ -1,0 +1,41 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Directory dependencies
+node_modules/
+
+# Production build
+dist/
+build/
+*.local
+
+# Generated files
+coverage/
+*.tsbuildinfo
+
+# Local env files
+.env
+.env.*.local
+
+# IDE / Editor
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Mac / Linux / Windows
+.DS_Store
+Thumbs.d
