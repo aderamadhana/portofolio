@@ -23,8 +23,6 @@
           <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
           <li class="nav-item"><a class="nav-link" href="#projects">Portfolio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           <!-- Dropdown bahasa (dummy) -->
           <li class="nav-item ms-lg-3">
             <div class="lang-toggle">
