@@ -1,160 +1,223 @@
 <template>
-  <!doctype html>
-  <html lang="id">
-    <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Portofolio — Your Name</title>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
-        rel="stylesheet"
-      />
-    </head>
-    <input type="radio" name="lang" id="lang-id" checked />
-    <input type="radio" name="lang" id="lang-en" />
-
-    <body>
-      <header>
-        <div class="container">
-          <nav>
-            <div class="logo">YourName</div>
-            <ul>
-              <li><a href="#about">Tentang</a></li>
-              <li><a href="#skills">Keahlian</a></li>
-              <li><a href="#projects">Proyek</a></li>
-              <li><a href="#experience">Pengalaman</a></li>
-              <li><a href="#contact">Kontak</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
-      <section class="hero container">
-        <div class="hero-text">
-          <h1>Halo, saya <span style="color: var(--accent)">Your Name</span></h1>
-          <p>
-            Seorang Web Developer dan Data Enthusiast yang senang membangun solusi digital elegan
-            dan berdampak nyata.
+  <!-- ===== HERO ===== -->
+  <section id="home" class="hero py-3">
+    <div class="wrap">
+      <div class="hero-card d-flex flex-lg-row flex-column gap-4 align-items-center">
+        <!-- TEXT SECTION -->
+        <div class="flex-grow-1">
+          <span class="muted">Services</span>
+          <h1 class="mt-1">
+            I'm <span style="color: var(--accent)">Ade Ramadhana Pratama</span><br />Fullstack Web
+            Developer
+          </h1>
+          <p class="subtitle mt-2">
+            Fullstack Web Developer with strong experience in building reliable, scalable, and
+            secure end-to-end web applications. Skilled in PHP (Laravel, CodeIgniter), ASP.Net,
+            Vue.js, and database design using MySQL and PostgreSQL.
           </p>
-          <a href="#" class="btn">Unduh CV</a>
+
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <div class="bullet"><i class="bi bi-check2-circle"></i><span>ASP.Net</span></div>
+            <div class="bullet"><i class="bi bi-check2-circle"></i><span>PostgreSQL</span></div>
+            <div class="bullet"><i class="bi bi-check2-circle"></i><span>Git</span></div>
+            <div class="bullet"><i class="bi bi-check2-circle"></i><span>REST API</span></div>
+            <div class="bullet"><i class="bi bi-check2-circle"></i><span>MySQL</span></div>
+            <div class="bullet"><i class="bi bi-check2-circle"></i><span>Laravel</span></div>
+            <div class="bullet"><i class="bi bi-check2-circle"></i><span>CodeIgniter</span></div>
+            <div class="bullet"><i class="bi bi-check2-circle"></i><span>PHP</span></div>
+            <div class="bullet"><i class="bi bi-check2-circle"></i><span>Vue.js</span></div>
+          </div>
+
+          <div class="social-badges mt-4">
+            <a href="https://github.com/aderamadhana" target="_blank"
+              ><i class="bi bi-github"></i> Github</a
+            >
+            <a href="https://www.linkedin.com/in/ade-ramadhana-p-abb489196/" target="_blank"
+              ><i class="bi bi-linkedin"></i> LinkedIn</a
+            >
+          </div>
         </div>
-        <div class="hero-img">
+
+        <!-- PHOTO INSIDE CARD -->
+        <div class="hero-photo" style="max-width: 380px; flex-shrink: 0">
           <img
-            src="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1200&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=1200&auto=format&fit=crop"
             alt="Profile"
           />
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <section id="about">
-        <div class="container about-grid">
-          <div>
-            <h2>Tentang Saya</h2>
-            <p class="lead">
-              Saya memiliki pengalaman lebih dari 5 tahun dalam pengembangan web, analisis data, dan
-              integrasi sistem. Berfokus pada performa, efisiensi, serta visualisasi data yang
-              menarik.
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects" class="py-4">
+    <div class="wrap">
+      <h3 class="sec-title">Latest Backend Projects</h3>
+      <p class="sec-sub">Here are a few production-grade services I've built recently.</p>
+
+      <div class="row g-4">
+        <!-- Project 1 -->
+        <div class="col-md-6 col-lg-4">
+          <article class="project">
+            <div class="thumb">
+              <img src="https://picsum.photos/seed/orderapi/800/450" alt="" />
+            </div>
+            <div class="body">
+              <div class="mb-1">
+                <span class="pill">Go</span><span class="pill">gRPC</span
+                ><span class="pill">Kafka</span><span class="pill">Postgres</span>
+              </div>
+              <h5 class="mb-1">Order API — High Throughput</h5>
+              <p class="muted">
+                CQRS, idempotency, outbox, saga orchestration; 50k rps, p95 &lt; 120ms.
+              </p>
+              <div class="mono">/v1/orders • POST • idempotency-key • trace-id</div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="col-md-6 col-lg-4">
+          <article class="project">
+            <div class="thumb"><img src="https://picsum.photos/seed/auth/800/450" alt="" /></div>
+            <div class="body">
+              <div class="mb-1">
+                <span class="pill">Node.js</span><span class="pill">REST</span
+                ><span class="pill">Redis</span><span class="pill">OPA</span>
+              </div>
+              <h5 class="mb-1">Auth & Token Service</h5>
+              <p class="muted">JWT/opaque, RBAC, key rotation, device binding; p95 &lt; 80ms.</p>
+              <div class="mono">/v1/tokens/issue • /introspect • /revoke</div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="col-md-6 col-lg-4">
+          <article class="project">
+            <div class="thumb"><img src="https://picsum.photos/seed/etl/800/450" alt="" /></div>
+            <div class="body">
+              <div class="mb-1">
+                <span class="pill">Python</span><span class="pill">Debezium</span
+                ><span class="pill">Kafka</span><span class="pill">BQ</span>
+              </div>
+              <h5 class="mb-1">ETL & Event-Driven Ingest</h5>
+              <p class="muted">CDC, schema evolution, late events, DLQ; freshness &lt; 5m.</p>
+              <div class="mono">topic: db.pembayaran • sink: bigquery.upsert</div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="col-md-6 col-lg-4">
+          <article class="project">
+            <div class="thumb"><img src="https://picsum.photos/seed/monitor/800/450" alt="" /></div>
+            <div class="body">
+              <div class="mb-1">
+                <span class="pill">OpenTelemetry</span><span class="pill">Prometheus</span
+                ><span class="pill">Grafana</span>
+              </div>
+              <h5 class="mb-1">Observability Platform</h5>
+              <p class="muted">
+                Traces/metrics/logs, RED/Saturation dashboards, SLO burn-rate alerts.
+              </p>
+              <div class="mono">trace_id=c9a1… • p95 latency • error budget</div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="col-md-6 col-lg-4">
+          <article class="project">
+            <div class="thumb">
+              <img src="https://picsum.photos/seed/payments/800/450" alt="" />
+            </div>
+            <div class="body">
+              <div class="mb-1">
+                <span class="pill">Laravel</span><span class="pill">MariaDB</span
+                ><span class="pill">Redis</span>
+              </div>
+              <h5 class="mb-1">Payments Gateway Adapter</h5>
+              <p class="muted">Webhook verifier, HMAC signatures, retries, dead-letter queue.</p>
+              <div class="mono">/callbacks/<em>provider</em> • signature=HMAC-SHA256</div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="col-md-6 col-lg-4">
+          <article class="project">
+            <div class="thumb"><img src="https://picsum.photos/seed/cdn/800/450" alt="" /></div>
+            <div class="body">
+              <div class="mb-1">
+                <span class="pill">S3</span><span class="pill">CloudFront</span
+                ><span class="pill">Go</span>
+              </div>
+              <h5 class="mb-1">Internal CDN & Upload Service</h5>
+              <p class="muted">Presigned URLs, antivirus scan, image resize pipeline.</p>
+              <div class="mono">PUT /v1/upload • GET /v1/files/{id}</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT / CONTACT ===== -->
+  <section id="about" class="py-4">
+    <div class="wrap">
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card-dark h-100">
+            <h3 class="sec-title">About Me</h3>
+            <p class="muted">
+              Backend engineer yang fokus pada arsitektur bersih, reliabilitas, dan observability.
+              Terbiasa dengan PostgreSQL/MariaDB, Redis, Kafka, Docker/K8s, dan praktik rilis tanpa
+              downtime.
             </p>
-          </div>
-          <div class="card">
-            <h3>Info Singkat</h3>
-            <p><b>Lokasi:</b> Malang, Indonesia</p>
-            <p><b>Email:</b> hello@example.com</p>
-            <p><b>Telepon:</b> +62 812-3456-7890</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="skills">
-        <div class="container">
-          <h2>Keahlian</h2>
-          <p class="lead">Beberapa keterampilan teknis utama yang saya kuasai:</p>
-          <div class="skills-list">
-            <div class="skill">HTML & CSS</div>
-            <div class="skill">JavaScript</div>
-            <div class="skill">Bootstrap</div>
-            <div class="skill">Python</div>
-            <div class="skill">SQL</div>
-            <div class="skill">Power BI</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="projects">
-        <div class="container">
-          <h2>Proyek Pilihan</h2>
-          <p class="lead">Kumpulan beberapa karya terbaik yang pernah saya kerjakan.</p>
-          <div class="projects">
-            <div class="project">
-              <img src="https://picsum.photos/seed/p1/800/500" alt="" />
-              <div class="project-content">
-                <h3>Dashboard Analitik</h3>
-                <p>Dashboard interaktif untuk memantau performa cabang dan KPI harian.</p>
+            <div class="row g-3 mt-1">
+              <div class="col-md-4">
+                <div class="counter"><b>GMT+7</b><span>Timezone</span></div>
               </div>
-            </div>
-            <div class="project">
-              <img src="https://picsum.photos/seed/p2/800/500" alt="" />
-              <div class="project-content">
-                <h3>ETL & Data Pipeline</h3>
-                <p>Pembuatan pipeline otomatis untuk data integrasi dan pelaporan Power BI.</p>
+              <div class="col-md-4">
+                <div class="counter"><b>&lt;24h</b><span>Response</span></div>
               </div>
-            </div>
-            <div class="project">
-              <img src="https://picsum.photos/seed/p3/800/500" alt="" />
-              <div class="project-content">
-                <h3>Aplikasi Klinik Online</h3>
-                <p>Pengembangan sistem pendaftaran pasien dan antrian berbasis web.</p>
+              <div class="col-md-4">
+                <div class="counter"><b>Remote</b><span>Friendly</span></div>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <section id="experience">
-        <div class="container">
-          <h2>Pengalaman</h2>
-          <div class="timeline">
-            <div class="timeline-item">
-              <h4>Senior Developer — PT KKI</h4>
-              <small>2023 — Sekarang</small>
-              <p>Mengembangkan sistem KPI dan integrasi data klinik multi-cabang.</p>
+        <div class="col-lg-6" id="contact">
+          <div class="card-dark h-100">
+            <h3 class="sec-title">Contact</h3>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="card-dark">
+                  <div class="icon"><i class="bi bi-envelope"></i></div>
+                  <div class="muted">hello@example.com</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card-dark">
+                  <div class="icon"><i class="bi bi-telephone"></i></div>
+                  <div class="muted">+62 812-3456-7890</div>
+                </div>
+              </div>
             </div>
-            <div class="timeline-item">
-              <h4>Data Analyst — MS Glow</h4>
-              <small>2021 — 2023</small>
-              <p>Membangun dashboard BI dan analisis perilaku pelanggan.</p>
-            </div>
-            <div class="timeline-item">
-              <h4>Freelance Web Developer</h4>
-              <small>2018 — 2021</small>
-              <p>Merancang website dinamis dan sistem CMS custom untuk klien UKM.</p>
+            <div class="mt-3">
+              <a
+                class="btn btn-lg"
+                style="background: var(--accent); color: #fff; border: none; border-radius: 12px"
+                href="mailto:hello@example.com"
+              >
+                <i class="bi bi-send"></i> Send Message
+              </a>
             </div>
           </div>
         </div>
-      </section>
-
-      <section id="contact">
-        <div class="container contact-grid">
-          <div>
-            <h2>Hubungi Saya</h2>
-            <p class="lead">Tertarik berkolaborasi atau berdiskusi? Kirim pesan Anda di sini.</p>
-            <form>
-              <input type="text" placeholder="Nama" required />
-              <input type="email" placeholder="Email" required />
-              <textarea placeholder="Pesan" required></textarea>
-              <button type="submit">Kirim Pesan</button>
-            </form>
-          </div>
-          <div class="card">
-            <h3>Kontak Langsung</h3>
-            <p><b>Email:</b> hello@example.com</p>
-            <p><b>Telepon:</b> +62 812-3456-7890</p>
-            <p><b>Lokasi:</b> Malang, Indonesia</p>
-          </div>
-        </div>
-      </section>
-
-      <footer>© 2025 • Portofolio Anda — Dibuat dengan HTML & CSS</footer>
-    </body>
-  </html>
+      </div>
+    </div>
+  </section>
 </template>
