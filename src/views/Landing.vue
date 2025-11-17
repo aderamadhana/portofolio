@@ -112,6 +112,7 @@ export default {
             <a href="https://www.linkedin.com/in/ade-ramadhana-p-abb489196/" target="_blank"
               ><i class="bi bi-linkedin"></i> LinkedIn</a
             >
+            <a href="#"><i class="bi bi-envelope"></i> sanade2034@gmail.com</a>
           </div>
         </div>
 
