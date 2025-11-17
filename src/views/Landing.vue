@@ -1,31 +1,108 @@
+<script>
+import axios from 'axios'
+
+export default {
+  name: 'ContohComponent',
+  data() {
+    return {
+      title: 'Halo Tuan, ini contoh Options API',
+      counter: 0,
+      api_url: import.meta.env.VITE_API_URL,
+      user_profil: null,
+      projects: [],
+      loading: false,
+      tech_stack: [],
+      lang: this.$i18n.locale,
+    }
+  },
+  watch: {
+    // 🔁 Jika bahasa berubah, simpan & reload data
+    '$i18n.locale'(newLang, oldLang) {
+      if (newLang !== oldLang) {
+        this.lang = newLang // update data internal
+        localStorage.setItem('lang', newLang)
+        this.reloadData() // panggil ulang API sesuai bahasa baru
+      }
+    },
+  },
+  mounted() {
+    this.reloadData()
+  },
+  methods: {
+    reloadData() {
+      this.getUserProfil()
+      this.getProjects()
+    },
+    async getUserProfil() {
+      this.loading = true
+      const startTime = Date.now()
+      await axios
+        .get(this.api_url + 'get_portofolio?lang=' + this.lang)
+        .then((response) => {
+          this.user_profil = response.data.data
+          this.tech_stack = JSON.parse(this.user_profil.tech_stack)
+        })
+        .catch((error) => {
+          console.error('Error:', error)
+        })
+        .finally(() => {
+          const elapsed = Date.now() - startTime
+          const minDuration = 1500
+          const remaining = Math.max(0, minDuration - elapsed)
+
+          setTimeout(() => {
+            this.loading = false
+          }, remaining)
+        })
+    },
+
+    async getProjects() {
+      this.loading = true
+      const startTime = Date.now()
+      await axios
+        .get(this.api_url + 'get_projects?lang=' + this.lang)
+        .then((response) => {
+          this.projects = response.data.data
+        })
+        .catch((error) => {
+          console.error('Error:', error)
+        })
+        .finally(() => {
+          const elapsed = Date.now() - startTime
+          const minDuration = 1500
+          const remaining = Math.max(0, minDuration - elapsed)
+
+          setTimeout(() => {
+            this.loading = false
+          }, remaining)
+        })
+    },
+  },
+}
+</script>
 <template>
   <!-- ===== HERO ===== -->
   <section id="home" class="hero py-3">
     <div class="wrap">
+      <div v-if="loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <p class="loading-text">Loading portfolio...</p>
+      </div>
       <div class="hero-card d-flex flex-lg-row flex-column gap-4 align-items-center">
         <!-- TEXT SECTION -->
         <div class="flex-grow-1">
-          <span class="muted">Services</span>
+          <span class="muted">{{ $t('service') }}</span>
           <h1 class="mt-1">
-            I'm <span style="color: var(--accent)">Ade Ramadhana Pratama</span><br />Fullstack Web
-            Developer
+            {{ $t('iam') }} <span style="color: var(--accent)">{{ this.user_profil?.name }}</span
+            ><br />{{ this.user_profil?.jabatan[lang] }}
           </h1>
           <p class="subtitle mt-2">
-            Fullstack Web Developer with strong experience in building reliable, scalable, and
-            secure end-to-end web applications. Skilled in PHP (Laravel, CodeIgniter), ASP.Net,
-            Vue.js, and database design using MySQL and PostgreSQL.
+            {{ this.user_profil?.deskripsi[lang] }}
           </p>
-
           <div class="d-flex flex-wrap gap-2 mt-3">
-            <div class="bullet"><i class="bi bi-check2-circle"></i><span>ASP.Net</span></div>
-            <div class="bullet"><i class="bi bi-check2-circle"></i><span>PostgreSQL</span></div>
-            <div class="bullet"><i class="bi bi-check2-circle"></i><span>Git</span></div>
-            <div class="bullet"><i class="bi bi-check2-circle"></i><span>REST API</span></div>
-            <div class="bullet"><i class="bi bi-check2-circle"></i><span>MySQL</span></div>
-            <div class="bullet"><i class="bi bi-check2-circle"></i><span>Laravel</span></div>
-            <div class="bullet"><i class="bi bi-check2-circle"></i><span>CodeIgniter</span></div>
-            <div class="bullet"><i class="bi bi-check2-circle"></i><span>PHP</span></div>
-            <div class="bullet"><i class="bi bi-check2-circle"></i><span>Vue.js</span></div>
+            <div class="bullet" v-for="(value, index) in tech_stack" :key="index">
+              <i class="bi bi-check2-circle"></i><span>{{ value }}</span>
+            </div>
           </div>
 
           <div class="social-badges mt-4">
@@ -41,121 +118,57 @@
         <!-- PHOTO INSIDE CARD -->
         <div class="hero-photo" style="max-width: 380px; flex-shrink: 0">
           <img
-            src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=1200&auto=format&fit=crop"
+            :src="user_profil?.profil_foto_url + '?q=80&w=1200&auto=format&fit=crop'"
             alt="Profile"
           />
         </div>
       </div>
     </div>
   </section>
-
   <!-- ===== PROJECTS ===== -->
   <section id="projects" class="py-4">
     <div class="wrap">
-      <h3 class="sec-title">Latest Backend Projects</h3>
-      <p class="sec-sub">Here are a few production-grade services I've built recently.</p>
+      <h3 class="sec-title">{{ $t('latest_projects') }}</h3>
+      <p class="sec-sub">{{ $t('sub_latest_projects') }}</p>
 
       <div class="row g-4">
-        <!-- Project 1 -->
-        <div class="col-md-6 col-lg-4">
-          <article class="project">
+        <!-- Project Card -->
+        <div class="col-md-6 col-lg-4 d-flex" v-for="(project, index) in projects" :key="index">
+          <article class="project flex-fill d-flex flex-column">
             <div class="thumb">
-              <img src="https://picsum.photos/seed/orderapi/800/450" alt="" />
+              <img
+                :src="
+                  project.icon_menu_url
+                    ? project.icon_menu_url
+                    : 'https://picsum.photos/seed/orderapi/800/450'
+                "
+                alt=""
+              />
             </div>
-            <div class="body">
-              <div class="mb-1">
-                <span class="pill">Go</span><span class="pill">gRPC</span
-                ><span class="pill">Kafka</span><span class="pill">Postgres</span>
-              </div>
-              <h5 class="mb-1">Order API — High Throughput</h5>
-              <p class="muted">
-                CQRS, idempotency, outbox, saga orchestration; 50k rps, p95 &lt; 120ms.
-              </p>
-              <div class="mono">/v1/orders • POST • idempotency-key • trace-id</div>
-            </div>
-          </article>
-        </div>
 
-        <!-- Project 2 -->
-        <div class="col-md-6 col-lg-4">
-          <article class="project">
-            <div class="thumb"><img src="https://picsum.photos/seed/auth/800/450" alt="" /></div>
-            <div class="body">
-              <div class="mb-1">
-                <span class="pill">Node.js</span><span class="pill">REST</span
-                ><span class="pill">Redis</span><span class="pill">OPA</span>
-              </div>
-              <h5 class="mb-1">Auth & Token Service</h5>
-              <p class="muted">JWT/opaque, RBAC, key rotation, device binding; p95 &lt; 80ms.</p>
-              <div class="mono">/v1/tokens/issue • /introspect • /revoke</div>
-            </div>
-          </article>
-        </div>
+            <div class="body flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <div class="mb-2">
+                  <span
+                    class="pill"
+                    v-if="project.tech_stack"
+                    v-for="(tech, i) in project.tech_stack"
+                    :key="i"
+                    >{{ tech }}</span
+                  >
+                </div>
 
-        <!-- Project 3 -->
-        <div class="col-md-6 col-lg-4">
-          <article class="project">
-            <div class="thumb"><img src="https://picsum.photos/seed/etl/800/450" alt="" /></div>
-            <div class="body">
-              <div class="mb-1">
-                <span class="pill">Python</span><span class="pill">Debezium</span
-                ><span class="pill">Kafka</span><span class="pill">BQ</span>
+                <h5 class="mb-1">{{ project.nama_menu[lang] }}</h5>
+                <p class="muted mb-2">
+                  {{ project.deskripsi[lang] }}
+                </p>
               </div>
-              <h5 class="mb-1">ETL & Event-Driven Ingest</h5>
-              <p class="muted">CDC, schema evolution, late events, DLQ; freshness &lt; 5m.</p>
-              <div class="mono">topic: db.pembayaran • sink: bigquery.upsert</div>
-            </div>
-          </article>
-        </div>
 
-        <!-- Project 4 -->
-        <div class="col-md-6 col-lg-4">
-          <article class="project">
-            <div class="thumb"><img src="https://picsum.photos/seed/monitor/800/450" alt="" /></div>
-            <div class="body">
-              <div class="mb-1">
-                <span class="pill">OpenTelemetry</span><span class="pill">Prometheus</span
-                ><span class="pill">Grafana</span>
+              <div class="mt-auto pt-2">
+                <a class="mono" :href="project.token_akses" target="_blank">
+                  {{ $t('view_application') }}
+                </a>
               </div>
-              <h5 class="mb-1">Observability Platform</h5>
-              <p class="muted">
-                Traces/metrics/logs, RED/Saturation dashboards, SLO burn-rate alerts.
-              </p>
-              <div class="mono">trace_id=c9a1… • p95 latency • error budget</div>
-            </div>
-          </article>
-        </div>
-
-        <!-- Project 5 -->
-        <div class="col-md-6 col-lg-4">
-          <article class="project">
-            <div class="thumb">
-              <img src="https://picsum.photos/seed/payments/800/450" alt="" />
-            </div>
-            <div class="body">
-              <div class="mb-1">
-                <span class="pill">Laravel</span><span class="pill">MariaDB</span
-                ><span class="pill">Redis</span>
-              </div>
-              <h5 class="mb-1">Payments Gateway Adapter</h5>
-              <p class="muted">Webhook verifier, HMAC signatures, retries, dead-letter queue.</p>
-              <div class="mono">/callbacks/<em>provider</em> • signature=HMAC-SHA256</div>
-            </div>
-          </article>
-        </div>
-
-        <!-- Project 6 -->
-        <div class="col-md-6 col-lg-4">
-          <article class="project">
-            <div class="thumb"><img src="https://picsum.photos/seed/cdn/800/450" alt="" /></div>
-            <div class="body">
-              <div class="mb-1">
-                <span class="pill">S3</span><span class="pill">CloudFront</span
-                ><span class="pill">Go</span>
-              </div>
-              <h5 class="mb-1">Internal CDN & Upload Service</h5>
-              <p class="muted">Presigned URLs, antivirus scan, image resize pipeline.</p>
-              <div class="mono">PUT /v1/upload • GET /v1/files/{id}</div>
             </div>
           </article>
         </div>

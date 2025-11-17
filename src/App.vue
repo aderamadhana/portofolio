@@ -15,17 +15,13 @@ export default {
     return {
       title: 'Halo Tuan, ini contoh Options API',
       counter: 0,
+      new_lang: 'en',
     }
   },
   mounted() {
-    console.log('Component sudah tampil!')
-    this.counter = 5
+    localStorage.setItem('lang', this.new_lang)
   },
-  methods: {
-    increment() {
-      this.counter++
-    },
-  },
+  methods: {},
 }
 </script>
 
