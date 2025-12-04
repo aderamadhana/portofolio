@@ -38,7 +38,6 @@ body,
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background: #050816; /* atau warna gradient yang Tuan pakai */
 }
 
 /* optional biar konten full width */
