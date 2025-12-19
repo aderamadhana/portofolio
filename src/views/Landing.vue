@@ -40,7 +40,8 @@ export default {
         .get(this.api_url + 'get_portofolio?lang=' + this.lang)
         .then((response) => {
           this.user_profil = response.data.data
-          this.tech_stack = JSON.parse(this.user_profil.tech_stack)
+          console.log(this.user_profil)
+          this.tech_stack = this.user_profil.tech_stacks
         })
         .catch((error) => {
           console.error('Error:', error)
@@ -160,7 +161,13 @@ export default {
                 </div>
 
                 <h5 class="mb-1">{{ project.nama_menu[lang] }}</h5>
-                <p class="muted mb-2">
+                <p
+                  v-if="/<\/?[a-z][\s\S]*>/i.test(project.deskripsi[lang])"
+                  v-html="project.deskripsi[lang]"
+                  class="muted mb-2"
+                />
+
+                <p v-else class="muted mb-2">
                   {{ project.deskripsi[lang] }}
                 </p>
               </div>
